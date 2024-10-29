@@ -5,6 +5,7 @@ import 'package:mazo/order_provider.dart';
 import 'package:mazo/select_gender.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:window_manager/window_manager.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -22,7 +23,17 @@ class _HomePageState extends State<HomePage> {
     // await DesktopWindow.setWindowSize(Size(350,623));
     Provider.of<OrderProvider>(context,listen: false).getOrder();
     Provider.of<ImgProvider>(context,listen: false).loadLinks();
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
+      await windowManager.ensureInitialized();
+      // await WindowManager.instance.setSize(Size(350*2, 623*2));
+      await WindowManager.instance.setFullScreen(true);
+      await windowManager.setAsFrameless();
+      // FlutterSoundRecordPlatform.instance = MyFlutterSoundRecordPlatform();
+      // FlutterSoundRecordPlatform.instance ;
+      // await windowManager.hide();
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

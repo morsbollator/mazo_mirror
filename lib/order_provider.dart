@@ -58,19 +58,38 @@ class OrderProvider extends ChangeNotifier{
         height: 100.w*1.41,
         child: Stack(
           children: [
-            Image.file(File(fullPath)),
-            Image.asset('assets/frame.png'),
+            Container(
+              width: 100.w,
+              height: 100.w*1.41,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: FileImage(File(fullPath),),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Container(
+              width: 100.w,
+              height: 100.w*1.41,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/frame.png',),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
             Positioned(
               bottom: 0,
               right: 0,
               child: Container(
-                width: 7.h,
-                height: 7.h,
+                width: 17.w,
+                height: 17.w,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.black),
                 ),
-                child: QrImageView(data: r,size: 7.h,),
+                child: QrImageView(data: r,size: 17.w,),
               ),
             ),
 
@@ -78,7 +97,7 @@ class OrderProvider extends ChangeNotifier{
         ),
       ))
           .then((capturedImage) async{
-        final path = 'C:\\Mirror\\Ssscreenshot_${(DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-'))}.png';
+        final path = 'C:\\mirror\\Ssscreenshot_${(DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-'))}.png';
         File(path).writeAsBytesSync(capturedImage);
 
         await Process.run('rundll32', [

@@ -36,7 +36,7 @@ class PreviewImage extends StatelessWidget {
 
             Container(
               width: 55.w,
-              height: 77.h,
+              height: 60.h,
               decoration: BoxDecoration(
                 color: Colors.grey.shade300,
                 image: DecorationImage(image: FileImage(File(image!)),
@@ -45,9 +45,9 @@ class PreviewImage extends StatelessWidget {
               ),
               child: Container(
                 width: 55.w,
-                height: 77.h,
+                height: 60.h,
                 decoration: const BoxDecoration(
-                  image: DecorationImage(image: AssetImage('asset/frame.png'),
+                  image: DecorationImage(image: AssetImage('assets/frame.png'),
                     fit: BoxFit.fill,),
                 ),
               ),

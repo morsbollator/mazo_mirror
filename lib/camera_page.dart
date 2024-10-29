@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mazo/constants.dart';
 import 'package:mazo/navigation.dart';
 import 'package:mazo/preview_image.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_windows/webview_windows.dart';
 // import 'dart:ui' as ui;
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key, required this.link});
@@ -18,8 +17,9 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  late WebViewController controller;
-  ScreenshotController screenshotController = ScreenshotController();
+  final _controller = WebviewController();
+  // late WebViewController controller;
+  // ScreenshotController screenshotController = ScreenshotController();
   int count = 5;
   bool pressed = false,showWidget = true,showLoading = true;
   Timer? timer;
@@ -33,7 +33,26 @@ class _CameraPageState extends State<CameraPage> {
     });
     String now = DateTime.now().toIso8601String().toString().replaceAll('.', "-").replaceAll(':', '-').replaceAll('-', '');
     final String filePath = 'C:\\mirror\\$now.png';
-    await Process.run('nircmd.exe', ['savescreenshot', filePath]);
+    // String command = '''
+    // Add-Type -AssemblyName System.Windows.Forms;
+    // \$bitmap = New-Object Drawing.Bitmap -ArgumentList [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width, [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Height;
+    // \$graphics = [Drawing.Graphics]::FromImage(\$bitmap);
+    // \$graphics.CopyFromScreen(0, 0, 0, 0, \$bitmap.Size);
+    // \$bitmap.Save('$filePath', [System.Drawing.Imaging.ImageFormat]::Png);
+    // \$graphics.Dispose();
+    // \$bitmap.Dispose();
+    // ''';
+    //
+    // // Run the PowerShell command
+    // var result = await Process.run('powershell', ['-Command', command]);
+
+
+    var result = await Process.run('C:\\src\\nircmd.exe', ['savescreenshot', filePath]);
+    if (result.exitCode == 0) {
+      print('Screenshot saved to: $filePath');
+    } else {
+      print('Error: ${result.stderr}');
+    }
     // Uint8List bytes = File(filePath).readAsBytesSync();
     showWidget = true;
     setState(() {
@@ -85,30 +104,48 @@ class _CameraPageState extends State<CameraPage> {
       });
     }
   }
+  void initWeb()async{
+    await _controller.initialize();
+    // _subscriptions.add(_controller.url.listen((url) {
+    //   _textController.text = url;
+    // }));
+    //
+    // _subscriptions
+    //     .add(_controller.containsFullScreenElementChanged.listen((flag) {
+    //   debugPrint('Contains fullscreen element: $flag');
+    //   windowManager.setFullScreen(flag);
+    // }));
+
+    await _controller.setBackgroundColor(Colors.transparent);
+    await _controller.setPopupWindowPolicy(WebviewPopupWindowPolicy.deny);
+    await _controller.loadUrl(widget.link);
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse(widget.link));
+    initWeb();
+    // controller = WebViewController()
+    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    //   ..setNavigationDelegate(
+    //     NavigationDelegate(
+    //       onProgress: (int progress) {
+    //         // Update loading bar.
+    //       },
+    //       onPageStarted: (String url) {},
+    //       onPageFinished: (String url) {},
+    //       onHttpError: (HttpResponseError error) {},
+    //       onWebResourceError: (WebResourceError error) {},
+    //       onNavigationRequest: (NavigationRequest request) {
+    //         if (request.url.startsWith('https://www.youtube.com/')) {
+    //           return NavigationDecision.prevent;
+    //         }
+    //         return NavigationDecision.navigate;
+    //       },
+    //     ),
+    //   )
+    //   ..loadRequest(Uri.parse(widget.link));
+
     Future.delayed(Duration(seconds: 5)).then((v){
       if(mounted){
         showLoading = false;
@@ -117,6 +154,30 @@ class _CameraPageState extends State<CameraPage> {
         });
       }
     });
+  }
+  Future<WebviewPermissionDecision> _onPermissionRequested(
+      String url, WebviewPermissionKind kind, bool isUserInitiated) async {
+    final decision = await showDialog<WebviewPermissionDecision>(
+      context: Constants.globalContext(),
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('WebView permission requested'),
+        content: Text('WebView has requested permission \'$kind\''),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () =>
+                Navigator.pop(context, WebviewPermissionDecision.deny),
+            child: const Text('Deny'),
+          ),
+          TextButton(
+            onPressed: () =>
+                Navigator.pop(context, WebviewPermissionDecision.allow),
+            child: const Text('Allow'),
+          ),
+        ],
+      ),
+    );
+
+    return decision ?? WebviewPermissionDecision.none;
   }
   @override
   Widget build(BuildContext context) {
@@ -137,7 +198,11 @@ class _CameraPageState extends State<CameraPage> {
             height: 100.h,
             child: Stack(
               children: [
-                SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: WebViewWidget(controller: controller))),
+                SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: Webview(
+                  _controller,
+                  permissionRequested: _onPermissionRequested,
+                ),)),
+                // SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: WebViewWidget(controller: controller))),
                 if(showWidget&&!showLoading)Positioned(
                   top: 0,
                   left: 0,
