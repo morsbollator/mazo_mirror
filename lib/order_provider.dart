@@ -77,7 +77,20 @@ class OrderProvider extends ChangeNotifier{
           ],
         ),
       ))
-          .then((capturedImage) {
+          .then((capturedImage) async{
+        final path = 'C:\\Mirror\\Ssscreenshot_${(DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-'))}.png';
+        File(path).writeAsBytesSync(capturedImage);
+
+        await Process.run('rundll32', [
+          'shimgvw.dll,ImageView_PrintTo',
+          '/pt',
+          path,
+          'mazo',
+          '/f',
+          '105',
+          '148.5'
+        ]);
+        // Process.run('rundll32 shimgvw.dll,ImageView_PrintTo /pt "$path" "mazo" /f 105 148.5');
         // print
         navPARU(HomePage());
       });
