@@ -187,7 +187,7 @@ class _CameraPageState extends State<CameraPage> {
           height: 100.h,
           child: Stack(
             children: [
-              SizedBox(width: 100.w,height: 100.h,child: widget.widget),
+              SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.2,child: widget.widget,)),
               // SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: WebViewWidget(controller: controller))),
               if(showWidget)Positioned(
                 top: 0,

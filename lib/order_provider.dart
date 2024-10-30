@@ -10,6 +10,7 @@ import 'package:mazo/home_page.dart';
 import 'package:mazo/navigation.dart';
 import 'package:mazo/printing_page.dart';
 import 'package:mazo/remote.dart';
+import 'package:mazo/uploading_page.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
@@ -32,7 +33,7 @@ class OrderProvider extends ChangeNotifier{
     });
   }
   Future uploadImage(String filePath)async{
-    navP(PrintingPage());
+    navP(UploadingPage());
     Map<String,dynamic> data = {};
     data['order_id'] = mirrorOrder.orderId;
     data['image'] = await MultipartFile.fromFile(filePath);
@@ -44,6 +45,7 @@ class OrderProvider extends ChangeNotifier{
     });
   }
   Future printImage(String fullPath,String filePath)async{
+    navP(PrintingPage());
     ScreenshotController screenshotController = ScreenshotController();
     Map<String,dynamic> data = {};
 
@@ -52,6 +54,7 @@ class OrderProvider extends ChangeNotifier{
     value.fold((l)async {
       print('error');
     }, (r) {
+
       screenshotController
           .captureFromWidget(Container(
         width: 100.w,

@@ -493,6 +493,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  video_player_platform_interface:
+    dependency: transitive
+    description:
+      name: video_player_platform_interface
+      sha256: "229d7642ccd9f3dc4aba169609dd6b5f3f443bb4cc15b82f7785fcada5af9bbb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.3"
+  video_player_win:
+    dependency: "direct main"
+    description:
+      name: video_player_win
+      sha256: ab5d0ea5a158c0bcb87512aa8517f92b11f49ede4ad4a5ec2da294cc92349d7f
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   vm_service:
     dependency: transitive
     description:

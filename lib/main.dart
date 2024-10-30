@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mazo/home_page.dart';
 import 'package:mazo/navigation.dart';
 import 'package:mazo/order_provider.dart';
+import 'package:mazo/printing_page.dart';
+import 'package:mazo/uploading_page.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:window_manager/window_manager.dart';
