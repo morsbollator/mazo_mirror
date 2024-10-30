@@ -23,7 +23,7 @@ class _CameraPageState extends State<CameraPage> {
   // late WebViewController controller;
   // ScreenshotController screenshotController = ScreenshotController();
   int count = 5;
-  bool pressed = false,showWidget = true,showLoading = true;
+  bool pressed = false,showWidget = true;
   Timer? timer;
   final GlobalKey _globalKey = GlobalKey();
 
@@ -148,14 +148,7 @@ class _CameraPageState extends State<CameraPage> {
     //   )
     //   ..loadRequest(Uri.parse(widget.link));
 
-    Future.delayed(Duration(seconds: 5)).then((v){
-      if(mounted){
-        showLoading = false;
-        setState(() {
-          ;
-        });
-      }
-    });
+
   }
   Future<WebviewPermissionDecision> _onPermissionRequested(
       String url, WebviewPermissionKind kind, bool isUserInitiated) async {
@@ -196,7 +189,7 @@ class _CameraPageState extends State<CameraPage> {
             children: [
               SizedBox(width: 100.w,height: 100.h,child: widget.widget),
               // SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: WebViewWidget(controller: controller))),
-              if(showWidget&&!showLoading)Positioned(
+              if(showWidget)Positioned(
                 top: 0,
                 left: 0,
                 right: 0,
@@ -244,38 +237,23 @@ class _CameraPageState extends State<CameraPage> {
               if(showWidget)Positioned(
                 top: 5.h,
                 left: 5.h,
-                child: Container(
-                  width: 50,
-                  height:50,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    shape: BoxShape.circle,
+                child: InkWell(
+                  onTap: (){
+                    navPop();
+                  },
+                  child: Container(
+                    width: 100,
+                    height:100,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: EdgeInsets.all(2.w),
+                    child: Icon(Icons.close,color: Colors.white,size: 40,),
                   ),
-                  padding: EdgeInsets.all(2.w),
-                  child: Icon(Icons.close,color: Colors.white,size: 20,),
                 ),
               ),
-              if(showWidget&&showLoading)Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: AnimatedOpacity(
-                  opacity: showLoading?1:0,
-                  duration: Duration(milliseconds: 500),
-                  child: Container(
-                    width: 50.w,
-                    height: 30.h,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Center(
-                      child: Lottie.asset('assets/loading.json'),
-                    ),
-                  )
-                ),
-              )
+
 
 
             ],
