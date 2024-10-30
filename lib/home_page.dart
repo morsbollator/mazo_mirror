@@ -7,6 +7,7 @@ import 'package:mazo/order_provider.dart';
 import 'package:mazo/select_gender.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:video_player/video_player.dart';
 import 'package:video_player_win/video_player_win.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -19,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late WinVideoPlayerController controller;
+  late VideoPlayerController controller;
   @override
   void initState() {
     // TODO: implement initState
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     // await DesktopWindow.setWindowSize(Size(350,623));
     Provider.of<OrderProvider>(context,listen: false).getOrder();
     Provider.of<ImgProvider>(context,listen: false).loadLinks();
-    controller = WinVideoPlayerController.file(File('C:\\mirror\\video.mp4'));
+    controller = VideoPlayerController.file(File('C:\\mirror\\video.mp4'));
 
     // controller.setLooping(true);
     controller.initialize().then((value) {
@@ -39,15 +40,15 @@ class _HomePageState extends State<HomePage> {
         setState(() {
 
         });
-        controller.addListener((){
-          if(controller.value.duration.inMilliseconds<controller.value.position.inMilliseconds){
-            controller.pause();
-            controller.seekTo(Duration(milliseconds: 0)).then((val){
-              controller.play();
-            });
-
-          }
-        });
+        // controller.addListener((){
+        //   if(controller.value.duration.inMilliseconds<controller.value.position.inMilliseconds){
+        //     controller.pause();
+        //     controller.seekTo(Duration(milliseconds: 0)).then((val){
+        //       controller.play();
+        //     });
+        //
+        //   }
+        // });
       } else {
 
       }
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
           //     fit: BoxFit.fill,
           //   ),
           // ),
-          child: controller.value.isInitialized?WinVideoPlayer(controller):SizedBox(),
+          child: controller.value.isInitialized?VideoPlayer(controller):SizedBox(),
         ),
       ),
     );

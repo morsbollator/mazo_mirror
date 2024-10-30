@@ -80,28 +80,8 @@ class ImgProvider extends ChangeNotifier{
     // Split the data into lines and remove any empty lines
     List<String> urls = data.split('\n').where((url) => url.isNotEmpty).toList();
     for(int i=0;i < 3;i++){
-      initWebView(i, 'female', urls[i]);
-      initWebView(i, 'male', urls[i+3]);
-      // female[i]['link'] = urls[i];
-      // male[i]['link'] = urls[i+3];
-      // final _controller1 = WebviewController();
-      // final _controller2 = WebviewController();
-      // await _controller1.initialize();
-      // await _controller1.setBackgroundColor(Colors.transparent);
-      // await _controller1.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
-      // await _controller1.loadUrl(female[i]['link']);
-      // await _controller2.initialize();
-      // await _controller2.setBackgroundColor(Colors.transparent);
-      // await _controller2.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
-      // await _controller2.loadUrl(male[i]['link']);
-      // female[i]['widget'] = Webview(
-      //   _controller1,
-      //   permissionRequested: _onPermissionRequested,
-      // );
-      // male[i]['widget'] = Webview(
-      //   _controller2,
-      //   permissionRequested: _onPermissionRequested,
-      // );
+      // initWebView(i, 'female', urls[i]);
+      // initWebView(i, 'male', urls[i+3]);
     }
   }
 
