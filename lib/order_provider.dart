@@ -152,7 +152,7 @@ class OrderProvider extends ChangeNotifier{
         ]);
         // Process.run('rundll32 shimgvw.dll,ImageView_PrintTo /pt "$path" "mazo" /f 105 148.5');
         // print
-        navPARU(HomePage());
+        navPU();
       });
 
     });

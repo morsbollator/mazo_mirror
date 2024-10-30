@@ -20,7 +20,7 @@ class UploadingPage extends StatelessWidget {
             BackButtonWidget(),
             SizedBox(height: 3.h,),
             Text('Your photo is in the ',style: TextStyle(color: Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),),
-            Text('Precessing & Deploy stage',style: TextStyle(color: Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),),
+            Text('Processing & Deploy stage',style: TextStyle(color: Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),),
             SizedBox(height: 15.h,),
             Lottie.asset('assets/deploy.json'),
           ],

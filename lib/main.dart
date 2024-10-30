@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
       await WindowManager.instance.setFullScreen(true);
       // await WindowManager.instance.setSize(Size(1080/2.5,1920/2.5));
       await windowManager.setAsFrameless();
-      navP(HomePage());
+      navPARU(HomePage());
       // FlutterSoundRecordPlatform.instance = MyFlutterSoundRecordPlatform();
       // FlutterSoundRecordPlatform.instance ;
       // await windowManager.hide();
