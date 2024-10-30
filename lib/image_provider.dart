@@ -45,32 +45,54 @@ class ImgProvider extends ChangeNotifier{
 
 
   }
+  void initWebView(int index,String type,String link)async{
+    final _controller1 = WebviewController();
+    await _controller1.initialize();
+    await _controller1.setBackgroundColor(Colors.transparent);
+    await _controller1.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
+    await _controller1.loadUrl(link);
+    if(type=='female'){
+      female[index]['link'] = link;
+      female[index]['widget'] = Webview(
+        _controller1,
+        permissionRequested: _onPermissionRequested,
+      );
+    }else{
+      male[index]['link'] = link;
+      male[index]['widget'] = Webview(
+        _controller1,
+        permissionRequested: _onPermissionRequested,
+      );
+    }
+  }
   void loadLinks()async{
     String data = await rootBundle.loadString('assets/links.txt');
 
     // Split the data into lines and remove any empty lines
     List<String> urls = data.split('\n').where((url) => url.isNotEmpty).toList();
     for(int i=0;i < 3;i++){
-      female[i]['link'] = urls[i];
-      male[i]['link'] = urls[i+3];
-      final _controller1 = WebviewController();
-      final _controller2 = WebviewController();
-      await _controller1.initialize();
-      await _controller1.setBackgroundColor(Colors.transparent);
-      await _controller1.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
-      await _controller1.loadUrl(female[i]['link']);
-      await _controller2.initialize();
-      await _controller2.setBackgroundColor(Colors.transparent);
-      await _controller2.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
-      await _controller2.loadUrl(male[i]['link']);
-      female[i]['widget'] = Webview(
-        _controller1,
-        permissionRequested: _onPermissionRequested,
-      );
-      male[i]['widget'] = Webview(
-        _controller2,
-        permissionRequested: _onPermissionRequested,
-      );
+      initWebView(i, 'female', urls[i]);
+      initWebView(i, 'male', urls[i+3]);
+      // female[i]['link'] = urls[i];
+      // male[i]['link'] = urls[i+3];
+      // final _controller1 = WebviewController();
+      // final _controller2 = WebviewController();
+      // await _controller1.initialize();
+      // await _controller1.setBackgroundColor(Colors.transparent);
+      // await _controller1.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
+      // await _controller1.loadUrl(female[i]['link']);
+      // await _controller2.initialize();
+      // await _controller2.setBackgroundColor(Colors.transparent);
+      // await _controller2.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
+      // await _controller2.loadUrl(male[i]['link']);
+      // female[i]['widget'] = Webview(
+      //   _controller1,
+      //   permissionRequested: _onPermissionRequested,
+      // );
+      // male[i]['widget'] = Webview(
+      //   _controller2,
+      //   permissionRequested: _onPermissionRequested,
+      // );
     }
   }
 
