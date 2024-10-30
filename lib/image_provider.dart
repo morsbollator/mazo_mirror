@@ -80,8 +80,8 @@ class ImgProvider extends ChangeNotifier{
     // Split the data into lines and remove any empty lines
     List<String> urls = data.split('\n').where((url) => url.isNotEmpty).toList();
     for(int i=0;i < 3;i++){
-      // initWebView(i, 'female', urls[i]);
-      // initWebView(i, 'male', urls[i+3]);
+      initWebView(i, 'female', urls[i]);
+      initWebView(i, 'male', urls[i+3]);
     }
   }
 

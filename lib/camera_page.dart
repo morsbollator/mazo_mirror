@@ -235,24 +235,19 @@ class _CameraPageState extends State<CameraPage> {
                   ),
                 ),
               ),
-              // Positioned(
-              //   bottom: 0,
-              //   child: Container(
-              //     width: 100.w,
-              //     height: 7.h,
-              //     color: Colors.white.withOpacity(0.3),
-              //     child: ClipRRect(
-              //       child: BackdropFilter(
-              //         filter: ImageFilter.blur(sigmaX: 7,sigmaY: 7),
-              //         child: Container(
-              //           width: 100.w,
-              //           height: 7.h,
-              //           color: Colors.white.withOpacity(0.3),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: 100.w,
+                  height: 20.h,
+                 decoration: BoxDecoration(
+                   image: DecorationImage(
+                     image: AssetImage('assets/logo.png'),
+                     fit: BoxFit.fill,
+                   )
+                 ),
+                ),
+              ),
               // Positioned(
               //   top: 0,
               //   child: Container(

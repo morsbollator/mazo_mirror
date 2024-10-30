@@ -36,19 +36,18 @@ class _HomePageState extends State<HomePage> {
 
         // controller.setLooping(true);
         controller.play();
-        controller.setLooping(true);
         setState(() {
 
         });
-        // controller.addListener((){
-        //   if(controller.value.duration.inMilliseconds<controller.value.position.inMilliseconds){
-        //     controller.pause();
-        //     controller.seekTo(Duration(milliseconds: 0)).then((val){
-        //       controller.play();
-        //     });
-        //
-        //   }
-        // });
+        controller.addListener((){
+          if(controller.value.duration.inMilliseconds<=controller.value.position.inMilliseconds){
+            controller.pause();
+            controller.seekTo(Duration(milliseconds: 1,seconds: 0)).then((val){
+              controller.play();
+            });
+
+          }
+        });
       } else {
 
       }
