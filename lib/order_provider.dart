@@ -65,7 +65,8 @@ class OrderProvider extends ChangeNotifier{
       ),
     ))
         .then((capturedImage) async{
-      final path = 'C:\\mirror\\Ssscreenshot_${(DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-'))}.png';
+      String now = DateTime.now().toIso8601String().toString().replaceAll('.', "-").replaceAll(':', '-').replaceAll('-', '');
+      final path = 'C:\\mirror\\Ssscreenshotframe_$now.png';
       File(path).writeAsBytesSync(capturedImage);
       Map<String,dynamic> data = {};
       data['order_id'] = mirrorOrder.orderId;
@@ -74,7 +75,7 @@ class OrderProvider extends ChangeNotifier{
       value.fold((l)async {
         print('error');
       }, (r) {
-        printImage(path,r.split('.com/')[1]);
+        printImage(filePath,r.split('.com/')[1]);
       });
 
     });
@@ -107,16 +108,16 @@ class OrderProvider extends ChangeNotifier{
                 ),
               ),
             ),
-            // Container(
-            //   width: 100.w,
-            //   height: 100.w*1.5,
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage('assets/frame.png',),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
+            Container(
+              width: 100.w,
+              height: 100.w*1.5,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/frame.png',),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
 
             Positioned(
               bottom: 5.h,
@@ -136,7 +137,8 @@ class OrderProvider extends ChangeNotifier{
         ),
       ))
           .then((capturedImage) async{
-        final path = 'C:\\mirror\\Ssscreenshot_${(DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-'))}.png';
+        String now = DateTime.now().toIso8601String().toString().replaceAll('.', "-").replaceAll(':', '-').replaceAll('-', '');
+        final path = 'C:\\mirror\\Ssscreenshot_$now.png';
         File(path).writeAsBytesSync(capturedImage);
 
         await Process.run('rundll32', [

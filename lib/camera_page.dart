@@ -188,7 +188,7 @@ class _CameraPageState extends State<CameraPage> {
           height: 100.h,
           child: Stack(
             children: [
-              SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.2,child: widget.widget,)),
+              SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1,child: widget.widget,)),
               // SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: WebViewWidget(controller: controller))),
               if(showWidget)Positioned(
                 top: 0,
@@ -235,42 +235,42 @@ class _CameraPageState extends State<CameraPage> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: 100.w,
-                  height: 7.h,
-                  color: Colors.white.withOpacity(0.3),
-                  child: ClipRRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 7,sigmaY: 7),
-                      child: Container(
-                        width: 100.w,
-                        height: 7.h,
-                        color: Colors.white.withOpacity(0.3),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 0,
-                child: Container(
-                  width: 100.w,
-                  height: 12.h,
-                  color: Colors.white.withOpacity(0.3),
-                  child: ClipRRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 7,sigmaY: 7),
-                      child: Container(
-                        width: 100.w,
-                        height: 7.h,
-                        color: Colors.white.withOpacity(0.3),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   bottom: 0,
+              //   child: Container(
+              //     width: 100.w,
+              //     height: 7.h,
+              //     color: Colors.white.withOpacity(0.3),
+              //     child: ClipRRect(
+              //       child: BackdropFilter(
+              //         filter: ImageFilter.blur(sigmaX: 7,sigmaY: 7),
+              //         child: Container(
+              //           width: 100.w,
+              //           height: 7.h,
+              //           color: Colors.white.withOpacity(0.3),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Positioned(
+              //   top: 0,
+              //   child: Container(
+              //     width: 100.w,
+              //     height: 12.h,
+              //     color: Colors.white.withOpacity(0.3),
+              //     child: ClipRRect(
+              //       child: BackdropFilter(
+              //         filter: ImageFilter.blur(sigmaX: 7,sigmaY: 7),
+              //         child: Container(
+              //           width: 100.w,
+              //           height: 7.h,
+              //           color: Colors.white.withOpacity(0.3),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               if(showWidget)Positioned(
                 top: 5.h,
                 left: 2.h,

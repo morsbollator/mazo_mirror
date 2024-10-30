@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
 
         });
         controller.addListener((){
-          if(controller.value.duration.compareTo(controller.value.position).isNegative){
+          if(controller.value.duration.inMilliseconds<controller.value.position.inMilliseconds){
             controller.pause();
             controller.seekTo(Duration(milliseconds: 0)).then((val){
               controller.play();
