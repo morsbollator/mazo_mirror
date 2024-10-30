@@ -34,15 +34,51 @@ class OrderProvider extends ChangeNotifier{
   }
   Future uploadImage(String filePath)async{
     navP(UploadingPage());
-    Map<String,dynamic> data = {};
-    data['order_id'] = mirrorOrder.orderId;
-    data['image'] = await MultipartFile.fromFile(filePath);
-    Either<DioException,String> value = await OrderRemoteDataSource.uploadImage(data);
-    value.fold((l)async {
-      print('error');
-    }, (r) {
-      printImage(filePath,r.split('.com/')[1]);
+    ScreenshotController screenshotController = ScreenshotController();
+    screenshotController
+        .captureFromWidget(Container(
+      width: 100.w,
+      height: 100.w*1.5,
+      child: Stack(
+        children: [
+          Container(
+            width: 100.w,
+            height: 100.w*1.41,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: FileImage(File(filePath),),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Container(
+            width: 100.w,
+            height: 100.w*1.5,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/frame.png',),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ))
+        .then((capturedImage) async{
+      final path = 'C:\\mirror\\Ssscreenshot_${(DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-'))}.png';
+      File(path).writeAsBytesSync(capturedImage);
+      Map<String,dynamic> data = {};
+      data['order_id'] = mirrorOrder.orderId;
+      data['image'] = await MultipartFile.fromFile(path);
+      Either<DioException,String> value = await OrderRemoteDataSource.uploadImage(data);
+      value.fold((l)async {
+        print('error');
+      }, (r) {
+        printImage(path,r.split('.com/')[1]);
+      });
+
     });
+
   }
   Future printImage(String fullPath,String filePath)async{
     navP(PrintingPage());
@@ -71,19 +107,19 @@ class OrderProvider extends ChangeNotifier{
                 ),
               ),
             ),
-            Container(
-              width: 100.w,
-              height: 100.w*1.5,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/frame.png',),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Container(
+            //   width: 100.w,
+            //   height: 100.w*1.5,
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage('assets/frame.png',),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
 
             Positioned(
-              bottom: 3.h,
+              bottom: 5.h,
               right: 3.h,
               child: Container(
                 width: 17.w,
