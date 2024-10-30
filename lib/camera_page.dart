@@ -234,24 +234,18 @@ class _CameraPageState extends State<CameraPage> {
                   ),
                 ),
               ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: 100.w,
+                  height: 14.h,
+                  color: Colors.black,
+                ),
+              ),
               if(showWidget)Positioned(
                 top: 5.h,
-                left: 5.h,
-                child: InkWell(
-                  onTap: (){
-                    navPop();
-                  },
-                  child: Container(
-                    width: 100,
-                    height:100,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: EdgeInsets.all(2.w),
-                    child: Icon(Icons.close,color: Colors.white,size: 40,),
-                  ),
-                ),
+                left: 2.h,
+                child: BackButtonWidget(),
               ),
 
 
@@ -264,3 +258,27 @@ class _CameraPageState extends State<CameraPage> {
   }
 }
 
+
+
+class BackButtonWidget extends StatelessWidget {
+  const BackButtonWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (){
+        navPop();
+      },
+      child: Container(
+        width: 100,
+        height:100,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+        ),
+        padding: EdgeInsets.all(2.w),
+        child: Icon(Icons.close,color: Colors.white,size: 40,),
+      ),
+    );
+  }
+}

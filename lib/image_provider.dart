@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mazo/navigation.dart';
+import 'package:sizer/sizer.dart';
 import 'package:webview_windows/webview_windows.dart';
 
 import 'filter_page.dart';
@@ -53,15 +54,23 @@ class ImgProvider extends ChangeNotifier{
     await _controller1.loadUrl(link);
     if(type=='female'){
       female[index]['link'] = link;
-      female[index]['widget'] = Webview(
-        _controller1,
-        permissionRequested: _onPermissionRequested,
+      female[index]['widget'] = SizedBox(
+        width: 100.w,
+        height: 100.h,
+        child: Webview(
+          _controller1,
+          permissionRequested: _onPermissionRequested,
+        ),
       );
     }else{
       male[index]['link'] = link;
-      male[index]['widget'] = Webview(
-        _controller1,
-        permissionRequested: _onPermissionRequested,
+      male[index]['widget'] = SizedBox(
+        width: 100.w,
+        height: 100.h,
+        child: Webview(
+          _controller1,
+          permissionRequested: _onPermissionRequested,
+        ),
       );
     }
   }
