@@ -3,15 +3,17 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mazo/constants.dart';
-import 'package:mazo/navigation.dart';
+// import 'package:mazo/constants.dart';
+// import 'package:mazo/navigation.dart';
 import 'package:mazo/preview_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:webview_windows/webview_windows.dart';
+
+import 'navigation.dart';
 // import 'dart:ui' as ui;
 class CameraPage extends StatefulWidget {
-  const CameraPage({super.key, required this.link});
-  final String link;
+  const CameraPage({super.key,required this.widget});
+  final Widget widget;
   @override
   State<CameraPage> createState() => _CameraPageState();
 }
@@ -105,7 +107,7 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
   void initWeb()async{
-    await _controller.initialize();
+
     // _subscriptions.add(_controller.url.listen((url) {
     //   _textController.text = url;
     // }));
@@ -115,10 +117,10 @@ class _CameraPageState extends State<CameraPage> {
     //   debugPrint('Contains fullscreen element: $flag');
     //   windowManager.setFullScreen(flag);
     // }));
-
-    await _controller.setBackgroundColor(Colors.transparent);
-    await _controller.setPopupWindowPolicy(WebviewPopupWindowPolicy.deny);
-    await _controller.loadUrl(widget.link);
+    // await _controller.initialize();
+    // await _controller.setBackgroundColor(Colors.transparent);
+    // await _controller.setPopupWindowPolicy(WebviewPopupWindowPolicy.allow);
+    // await _controller.loadUrl(widget.link);
   }
   @override
   void initState() {
@@ -157,6 +159,7 @@ class _CameraPageState extends State<CameraPage> {
   }
   Future<WebviewPermissionDecision> _onPermissionRequested(
       String url, WebviewPermissionKind kind, bool isUserInitiated) async {
+    return  WebviewPermissionDecision.allow;
     // final decision = await showDialog<WebviewPermissionDecision>(
     //   context: Constants.globalContext(),
     //   builder: (BuildContext context) => AlertDialog(
@@ -177,116 +180,105 @@ class _CameraPageState extends State<CameraPage> {
     //   ),
     // );
 
-    return  WebviewPermissionDecision.allow;
+
   }
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: InkWell(
-        onTap: (){
-          Navigator.pop(context);
-        },
-        onDoubleTap: (){
-          navPop();
-        },
-        child: RepaintBoundary(
-          key: _globalKey,
-          child: SizedBox(
-            width: 100.w,
-            height: 100.h,
-            child: Stack(
-              children: [
-                SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1,child: Webview(
-                  _controller,
-                  permissionRequested: _onPermissionRequested,
-                ),)),
-                // SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: WebViewWidget(controller: controller))),
-                if(showWidget&&!showLoading)Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: InkWell(
-                    onTap: (){
-                      if(!pressed){
-                        decreaseCount();
-                      }
-                    },
-                    splashColor: Colors.transparent,
-                    child: SizedBox(
-                      width: 100.w,
-                      height: 100.h,
-                      child: Center(
-                        child: AnimatedSwitcher(
-                          duration: Duration(milliseconds: 500), // Animation duration
-                          child: Text(
-                            pressed?'$count': 'Press To Capture',
-                            key: ValueKey<int>(count),
-                            style: TextStyle(
-                              fontSize: pressed?200:50,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white.withOpacity(0.5),
-                            ),
+      body: RepaintBoundary(
+        key: _globalKey,
+        child: SizedBox(
+          width: 100.w,
+          height: 100.h,
+          child: Stack(
+            children: [
+              SizedBox(width: 100.w,height: 100.h,child: widget.widget),
+              // SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: WebViewWidget(controller: controller))),
+              if(showWidget&&!showLoading)Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: InkWell(
+                  onTap: (){
+                    if(!pressed){
+                      decreaseCount();
+                    }
+                  },
+                  splashColor: Colors.transparent,
+                  child: SizedBox(
+                    width: 100.w,
+                    height: 100.h,
+                    child: Center(
+                      child: AnimatedSwitcher(
+                        duration: Duration(milliseconds: 500), // Animation duration
+                        child: Text(
+                          pressed?'$count': 'Press To Capture',
+                          key: ValueKey<int>(count),
+                          style: TextStyle(
+                            fontSize: pressed?200:50,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white.withOpacity(0.5),
                           ),
-                          transitionBuilder: (Widget child, Animation<double> animation) {
-                            const begin = 0.0;
-                            const end = 1.0;
-                            const curve = Curves.easeIn;
-
-                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                            var opacityAnimation = tween.animate(animation);
-
-                            return FadeTransition(
-                              opacity: opacityAnimation,
-                              child: child,
-                            );
-                          },
                         ),
+                        transitionBuilder: (Widget child, Animation<double> animation) {
+                          const begin = 0.0;
+                          const end = 1.0;
+                          const curve = Curves.easeIn;
+
+                          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                          var opacityAnimation = tween.animate(animation);
+
+                          return FadeTransition(
+                            opacity: opacityAnimation,
+                            child: child,
+                          );
+                        },
                       ),
                     ),
                   ),
                 ),
-                if(showWidget)Positioned(
-                  top: 5.h,
-                  left: 5.h,
+              ),
+              if(showWidget)Positioned(
+                top: 5.h,
+                left: 5.h,
+                child: Container(
+                  width: 50,
+                  height:50,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: EdgeInsets.all(2.w),
+                  child: Icon(Icons.close,color: Colors.white,size: 20,),
+                ),
+              ),
+              if(showWidget&&showLoading)Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: AnimatedOpacity(
+                  opacity: showLoading?1:0,
+                  duration: Duration(milliseconds: 500),
                   child: Container(
-                    width: 50,
-                    height:50,
+                    width: 50.w,
+                    height: 30.h,
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    padding: EdgeInsets.all(2.w),
-                    child: Icon(Icons.close,color: Colors.white,size: 20,),
-                  ),
+                    child: Center(
+                      child: Lottie.asset('assets/loading.json'),
+                    ),
+                  )
                 ),
-                if(showWidget&&showLoading)Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: AnimatedOpacity(
-                    opacity: showLoading?1:0,
-                    duration: Duration(milliseconds: 500),
-                    child: Container(
-                      width: 50.w,
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Center(
-                        child: Lottie.asset('assets/loading.json'),
-                      ),
-                    )
-                  ),
-                )
+              )
 
 
-              ],
-            ),
+            ],
           ),
         ),
       ),

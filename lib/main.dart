@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mazo/home_page.dart';
 import 'package:mazo/navigation.dart';
 import 'package:mazo/order_provider.dart';
@@ -74,11 +72,10 @@ class _MyAppState extends State<MyApp> {
                     navigatorObservers: [routeObserver],
                     navigatorKey: Constants.navState,
                     builder: (context, child) {
-                      return Container(
-                        color: Colors.white,
-                        child: SizedBox(width: 100.w, height: 100.h, child: Stack(children: [
+                      return Stack(
+                        children: [
                           child!,
-                        ],),),
+                        ],
                       );
                     },
 

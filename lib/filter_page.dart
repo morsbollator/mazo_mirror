@@ -62,7 +62,7 @@ class FilterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        navP(CameraPage(link: data['link']));
+        navP(CameraPage(widget: data['widget']));
         // navP(PreviewImage(image: null));
       },
       child: Container(
