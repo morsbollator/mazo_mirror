@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -238,8 +239,36 @@ class _CameraPageState extends State<CameraPage> {
                 bottom: 0,
                 child: Container(
                   width: 100.w,
-                  height: 14.h,
-                  color: Colors.black,
+                  height: 7.h,
+                  color: Colors.white.withOpacity(0.3),
+                  child: ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 7,sigmaY: 7),
+                      child: Container(
+                        width: 100.w,
+                        height: 7.h,
+                        color: Colors.white.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                child: Container(
+                  width: 100.w,
+                  height: 12.h,
+                  color: Colors.white.withOpacity(0.3),
+                  child: ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 7,sigmaY: 7),
+                      child: Container(
+                        width: 100.w,
+                        height: 7.h,
+                        color: Colors.white.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               if(showWidget)Positioned(

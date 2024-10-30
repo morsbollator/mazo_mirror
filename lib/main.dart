@@ -47,8 +47,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_)async{
       await windowManager.ensureInitialized();
-      // await WindowManager.instance.setFullScreen(true);
-      await WindowManager.instance.setSize(Size(1080/3,1920/3));
+      await WindowManager.instance.setFullScreen(true);
+      // await WindowManager.instance.setSize(Size(1080/3,1920/3));
       await windowManager.setAsFrameless();
       navP(HomePage());
       // FlutterSoundRecordPlatform.instance = MyFlutterSoundRecordPlatform();

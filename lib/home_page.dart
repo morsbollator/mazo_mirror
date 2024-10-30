@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mazo/image_provider.dart';
 import 'package:mazo/navigation.dart';
@@ -25,17 +27,34 @@ class _HomePageState extends State<HomePage> {
     // await DesktopWindow.setWindowSize(Size(350,623));
     Provider.of<OrderProvider>(context,listen: false).getOrder();
     Provider.of<ImgProvider>(context,listen: false).loadLinks();
-    var controller = WinVideoPlayerController.asset('assets/video.mp4');
-    controller.setLooping(true);
+    controller = WinVideoPlayerController.file(File('C:\\mirror\\video.mp4'));
+
+    // controller.setLooping(true);
     controller.initialize().then((value) {
       if (controller.value.isInitialized) {
+
+        // controller.setLooping(true);
         controller.play();
+        controller.setLooping(true);
+        setState(() {
+
+        });
+        controller.addListener((){
+          if(controller.value.duration.compareTo(controller.value.position).isNegative){
+            controller.pause();
+            controller.seekTo(Duration(milliseconds: 0)).then((val){
+              controller.play();
+            });
+
+          }
+        });
       } else {
 
       }
     }).catchError((e) {
 
     });
+
 
   }
 
@@ -56,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           //     fit: BoxFit.fill,
           //   ),
           // ),
-          child: WinVideoPlayer(controller),
+          child: controller.value.isInitialized?WinVideoPlayer(controller):SizedBox(),
         ),
       ),
     );
