@@ -157,27 +157,27 @@ class _CameraPageState extends State<CameraPage> {
   }
   Future<WebviewPermissionDecision> _onPermissionRequested(
       String url, WebviewPermissionKind kind, bool isUserInitiated) async {
-    final decision = await showDialog<WebviewPermissionDecision>(
-      context: Constants.globalContext(),
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('WebView permission requested'),
-        content: Text('WebView has requested permission \'$kind\''),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () =>
-                Navigator.pop(context, WebviewPermissionDecision.deny),
-            child: const Text('Deny'),
-          ),
-          TextButton(
-            onPressed: () =>
-                Navigator.pop(context, WebviewPermissionDecision.allow),
-            child: const Text('Allow'),
-          ),
-        ],
-      ),
-    );
+    // final decision = await showDialog<WebviewPermissionDecision>(
+    //   context: Constants.globalContext(),
+    //   builder: (BuildContext context) => AlertDialog(
+    //     title: const Text('WebView permission requested'),
+    //     content: Text('WebView has requested permission \'$kind\''),
+    //     actions: <Widget>[
+    //       TextButton(
+    //         onPressed: () =>
+    //             Navigator.pop(context, WebviewPermissionDecision.deny),
+    //         child: const Text('Deny'),
+    //       ),
+    //       TextButton(
+    //         onPressed: () =>
+    //             Navigator.pop(context, WebviewPermissionDecision.allow),
+    //         child: const Text('Allow'),
+    //       ),
+    //     ],
+    //   ),
+    // );
 
-    return decision ?? WebviewPermissionDecision.none;
+    return  WebviewPermissionDecision.allow;
   }
   @override
   Widget build(BuildContext context) {
@@ -198,7 +198,7 @@ class _CameraPageState extends State<CameraPage> {
             height: 100.h,
             child: Stack(
               children: [
-                SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1.4,child: Webview(
+                SizedBox(width: 100.w,height: 100.h,child: Transform.scale(scale: 1,child: Webview(
                   _controller,
                   permissionRequested: _onPermissionRequested,
                 ),)),

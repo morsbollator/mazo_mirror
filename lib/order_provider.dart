@@ -55,7 +55,7 @@ class OrderProvider extends ChangeNotifier{
       screenshotController
           .captureFromWidget(Container(
         width: 100.w,
-        height: 100.w*1.41,
+        height: 100.w*1.5,
         child: Stack(
           children: [
             Container(
@@ -70,7 +70,7 @@ class OrderProvider extends ChangeNotifier{
             ),
             Container(
               width: 100.w,
-              height: 100.w*1.41,
+              height: 100.w*1.5,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/frame.png',),
@@ -80,8 +80,8 @@ class OrderProvider extends ChangeNotifier{
             ),
 
             Positioned(
-              bottom: 0,
-              right: 0,
+              bottom: 3.h,
+              right: 3.h,
               child: Container(
                 width: 17.w,
                 height: 17.w,

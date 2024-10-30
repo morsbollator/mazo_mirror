@@ -35,20 +35,20 @@ class PreviewImage extends StatelessWidget {
             SizedBox(height: 7.h,),
 
             Container(
-              width: 55.w,
-              height: 60.h,
+              width: 70.w,
+              height: 70.w*1.5,
               decoration: BoxDecoration(
                 color: Colors.grey.shade300,
                 image: DecorationImage(image: FileImage(File(image!)),
-                  fit: BoxFit.fill,),
+                  fit: BoxFit.cover,),
 
               ),
               child: Container(
-                width: 55.w,
-                height: 60.h,
+                width: 70.w,
+                height: 70.w*1.5,
                 decoration: const BoxDecoration(
                   image: DecorationImage(image: AssetImage('assets/frame.png'),
-                    fit: BoxFit.fill,),
+                    fit: BoxFit.cover,),
                 ),
               ),
             ),
